@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <title>Index</title>
+</head>
+<body>
+    <h1>These are the badges</h1>
+    <ul class='badges'>
+        
+    <% for(let i = 0; i < badges.length; i++){ %>
+
+       <a href="/badges/<%= i %>"><li><%= badges[i].title %></li></a>
+       <form action="/badges/<%= badges[i]._id %>?_method=DELETE" method='POST'>
+       <button type='submit'>Delete this badge</button></form>
+
+    <% } %>
+    </ul>
+</body>
+</html>

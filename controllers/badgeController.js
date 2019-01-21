@@ -20,9 +20,46 @@ router.get('/', (req,res)=>{
         if(err){
             res.send(err);
         }
-        res.send(data);
+        res.render('index.ejs', {
+            badges: data
+        })
+        // res.send(data);
     })
+});
+
+// new
+router.get('/new', (req,res)=>{
+    res.render('new.ejs');
+});
+
+// post
+router.post('/', (req,res)=>{
+    Badge.insert(req.body);
+    res.redirect('/badges');
 })
 
+// show
+router.get('/:id', (req,res)=>{
+    Badge.find((err,data)=>{
+        if(err){
+            res.send(err);
+        }
+        res.render('show.ejs', {
+            badge: data[req.params.id],
+            index: req.params.id
+        })
+    })
+});
+
+// delete
+router.delete('/:id', (req,res)=>{
+    Badge.findByIdAndRemove(req.params.id, (err,data)=>{
+        if(err){
+            res.send(err);
+        }
+        res.redirect('/badges');
+    });
+    
+});
 
 module.exports = router;
