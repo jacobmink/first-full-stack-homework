@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const connectionString = 'mongodb://localhost/badges_db';
-
-mongoose.connect(connectionString);
 
 const Schema = mongoose.Schema;
 
@@ -12,9 +9,6 @@ const badgeSchema = new Schema({
     difficulty: {type: Number, required: true}
 });
 
+const Badge = mongoose.model('Badge', badgeSchema);
 
-const Badges = mongoose.model('Badges', badgeSchema);
-
-module.exports = Badges;
-
-
+module.exports = Badge;

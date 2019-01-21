@@ -1,7 +1,19 @@
 const express = require('express');
 const app = express();
 
-const Badges = require('../models/badges_db');
+const Badges = require('./badges_db');
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
