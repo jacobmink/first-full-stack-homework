@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 const connectionString = 'mongodb://localhost/badges_db';
 
-const Badge = require('./models/badge_schema');
-const badgeData = require('./badge_examples');
-
 // open connection
 mongoose.connect(connectionString);
 
-// insert starter data
-Badge.collection.insertMany(badgeData, (err,data)=>{
-    console.log('added data');
-    mongoose.connection.close();
-})
+const Schema = mongoose.Schema;
+
+const badgeSchema = new Schema({
+    title: {type: String, required: true},
+    badgeType: {type: String, required: true},
+    colors: [{type: String, required: true}],
+    difficulty: {type: Number, required: true}
+});
+
+const Badge = mongoose.model('Badge', badgeSchema);
+
+module.exports = Badge;
