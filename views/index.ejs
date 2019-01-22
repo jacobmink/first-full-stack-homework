@@ -10,11 +10,16 @@
         
     <% for(let i = 0; i < badges.length; i++){ %>
 
-       <a href="/badges/<%= i %>"><li><%= badges[i].title %></li></a>
+       <a href="/badges/<%= badges[i]._id %>"><li><%= badges[i].title %></li></a>
+
        <form action="/badges/<%= badges[i]._id %>?_method=DELETE" method='POST'>
        <button type='submit'>Delete this badge</button></form>
 
+       <a href="/badges/<%= badges[i]._id %>/edit"> <button type="submit">Edit this badge</button></a>
+
     <% } %>
     </ul>
+
+    <a href="/badges/new"><button>Create a new badge</button></a>
 </body>
 </html>

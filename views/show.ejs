@@ -10,6 +10,12 @@
         <li>Type: <%= badge.badgeType %></li>
         <li>Colors: <%= badge.colors %></li>
         <li>Difficulty: <%= badge.difficulty %></li>
+
+        <form action="/badges/<%= badge._id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete this badge</button></form>
+        <a href="/badges/<%= badge._id %>/edit"> <button type="submit">Edit this badge</button></a>
     </ul>
+
+    <a href="/badges"><button>Back to badge list</button></a>
 </body>
 </html>

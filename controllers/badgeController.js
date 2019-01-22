@@ -15,51 +15,85 @@ const badgeData = require('../badge_examples');
 
 // ROUTES
 
-router.get('/', (req,res)=>{
-    Badge.find((err,data)=>{
-        if(err){
-            res.send(err);
-        }
-        res.render('index.ejs', {
-            badges: data
-        })
-        // res.send(data);
+router.route('/')
+    // index
+    .get((req,res)=>{
+        Badge.find((err,data)=>{
+            if(err){
+                res.send(err);
+            }
+            res.render('index.ejs', {
+                badges: data
+            });
+        });
     })
-});
+    // post
+    .post((req,res)=>{
+        Badge.collection.insert(req.body, (err,data)=>{
+            if(err){
+                res.send(err);
+            }
+            res.redirect('/badges');
+        });
+    });
 
 // new
-router.get('/new', (req,res)=>{
-    res.render('new.ejs');
-});
-
-// post
-router.post('/', (req,res)=>{
-    Badge.insert(req.body);
-    res.redirect('/badges');
-})
-
-// show
-router.get('/:id', (req,res)=>{
-    Badge.find((err,data)=>{
-        if(err){
-            res.send(err);
-        }
-        res.render('show.ejs', {
-            badge: data[req.params.id],
-            index: req.params.id
-        })
-    })
-});
-
-// delete
-router.delete('/:id', (req,res)=>{
-    Badge.findByIdAndRemove(req.params.id, (err,data)=>{
-        if(err){
-            res.send(err);
-        }
-        res.redirect('/badges');
+router.route('/new')
+    .get((req,res)=>{
+        Badge.find((err,data)=>{
+            if(err){
+                res.send(err);
+            }
+            res.render('new.ejs');
+        });
     });
-    
-});
+
+router.route('/:id')
+    // show
+    .get((req,res)=>{
+        Badge.findById(req.params.id, (err,data)=>{
+            if(err){
+                res.send(err);
+            }
+            res.render('show.ejs', {
+                badge: data
+            });
+        });
+    })
+    // update
+    .put((req,res)=>{
+        Badge.findByIdAndUpdate(req.params.id, req.body, (err,data)=>{
+            if(err){
+                res.send(err);
+            }
+            res.redirect(`/badges/${req.params.id}`);
+        });
+    })
+    // delete
+    .delete((req,res)=>{
+        Badge.findByIdAndRemove(req.params.id, (err,data)=>{
+            if(err){
+                res.send(err);
+            }
+            res.redirect('/badges');
+        });
+    });
+
+// edit
+router.route('/:id/edit')
+    .get((req,res)=>{
+        Badge.findById(req.params.id, (err,data)=>{
+            if(err){
+                res.send(err);
+            }
+            res.render('edit.ejs', {
+                badge: data
+            });
+        });
+    });
+
+
+
+
 
 module.exports = router;
